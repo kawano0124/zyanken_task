@@ -57,34 +57,46 @@ def attimuite_hoi_result(finger_direction, face_direction)
   finger_direction == face_direction
 end
 
-loop do
-  puts "じゃんけん..."
+def janken
   player_hand = get_hand_input
   opponent_hand = random_hand
   puts "あなた: #{hand_name(player_hand)}, 相手: #{hand_name(opponent_hand)}"
   
-  result = janken_result(player_hand, opponent_hand)
+  janken_result(player_hand, opponent_hand)
+end
+
+def attimuite_hoi(winner)
+  if winner == "player"
+    puts "あなたの勝ちです。あっち向いてホイ..."
+    finger_direction = get_direction_input
+    face_direction = random_direction
+    puts "相手の顔の方向: #{direction_name(face_direction)}"
+    attimuite_hoi_result(finger_direction, face_direction)
+  else
+    puts "あなたの負けです。あっち向いてホイ..."
+    face_direction = get_direction_input
+    finger_direction = random_direction
+    puts "相手の指の方向: #{direction_name(finger_direction)}"
+    attimuite_hoi_result(finger_direction, face_direction)
+  end
+end
+
+loop do
+  puts "じゃんけん..."
+  result = janken
   
   if result == "draw"
     puts "あいこで..."
     next
   elsif result == "win"
-    puts "あなたの勝ちです。あっち向いてホイ..."
-    finger_direction = get_direction_input
-    face_direction = random_direction
-    puts "相手の顔の方向: #{direction_name(face_direction)}"
-    if attimuite_hoi_result(finger_direction, face_direction)
+    if attimuite_hoi("player")
       puts "あなたの勝ちです！"
       break
     else
       puts "続けます。"
     end
   else
-    puts "あなたの負けです。あっち向いてホイ..."
-    face_direction = get_direction_input
-    finger_direction = random_direction
-    puts "相手の指の方向: #{direction_name(finger_direction)}"
-    if attimuite_hoi_result(finger_direction, face_direction)
+    if attimuite_hoi("opponent")
       puts "相手の勝ちです！"
       break
     else
