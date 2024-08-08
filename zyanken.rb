@@ -71,13 +71,21 @@ def attimuite_hoi(winner)
     finger_direction = get_direction_input
     face_direction = random_direction
     puts "相手の顔の方向: #{direction_name(face_direction)}"
-    attimuite_hoi_result(finger_direction, face_direction)
+    if attimuite_hoi_result(finger_direction, face_direction)
+      "player"
+    else
+      "continue"
+    end
   else
     puts "あなたの負けです。あっち向いてホイ..."
     face_direction = get_direction_input
     finger_direction = random_direction
     puts "相手の指の方向: #{direction_name(finger_direction)}"
-    attimuite_hoi_result(finger_direction, face_direction)
+    if attimuite_hoi_result(finger_direction, face_direction)
+      "opponent"
+    else
+      "continue"
+    end
   end
 end
 
@@ -89,14 +97,16 @@ loop do
     puts "あいこで..."
     next
   elsif result == "win"
-    if attimuite_hoi("player")
+    attimuite_hoi_result = attimuite_hoi("player")
+    if attimuite_hoi_result == "player"
       puts "あなたの勝ちです！"
       break
     else
       puts "続けます。"
     end
   else
-    if attimuite_hoi("opponent")
+    attimuite_hoi_result = attimuite_hoi("opponent")
+    if attimuite_hoi_result == "opponent"
       puts "相手の勝ちです！"
       break
     else
